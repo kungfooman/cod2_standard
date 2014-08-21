@@ -23,7 +23,7 @@ make_global_mysql(host, user, pass, db, port)
 		
 	if (isDefined(level.mysql))
 	{
-		std\io::print("Reusing MySQL-Connection: handle="+level.mysql+"\n");
+		printf("Reusing MySQL-Connection: handle=%\n", level.mysql);
 		return;
 	}
 	
@@ -32,11 +32,11 @@ make_global_mysql(host, user, pass, db, port)
 	ret = mysql_real_connect(mysql, host, user, pass, db, port);
 	if (!ret)
 	{
-		std\io::print("errno="+mysql_errno(mysql) + " error=''"+mysql_error(mysql) + "''");
+		printf("errno=% error=''%''", mysql_errno(mysql), mysql_error(mysql));
 		mysql_close(mysql);
 		return;
 	}
-	std\io::print("MySQL-Connection created: handle="+mysql+"\n");
+	printf("MySQL-Connection created: handle=%\n", mysql);
 	
 	// ok, now make it global!
 	level.mysql = mysql;
@@ -47,7 +47,7 @@ make_global_mysql(host, user, pass, db, port)
 delete_global_mysql()
 {
 	mysql_close(level.mysql);
-	std\io::print("MySQL-Connection deleted: handle="+level.mysql+"\n");
+	printf("MySQL-Connection deleted: handle=%\n", level.mysql);
 	//level.mysql = undefined;
 }
 
