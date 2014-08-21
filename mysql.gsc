@@ -27,13 +27,13 @@ make_global_mysql(host, user, pass, db, port)
 		return;
 	}
 	
-	mysql = std\mysql::mysql_init();
+	mysql = mysql_init();
 	//iprintln("mysql="+mysql);
-	ret = std\mysql::mysql_real_connect(mysql, host, user, pass, db, port);
+	ret = mysql_real_connect(mysql, host, user, pass, db, port);
 	if (!ret)
 	{
-		std\io::print("errno="+std\mysql::mysql_errno(mysql) + " error=''"+std\mysql::mysql_error(mysql) + "''");
-		std\mysql::mysql_close(mysql);
+		std\io::print("errno="+mysql_errno(mysql) + " error=''"+mysql_error(mysql) + "''");
+		mysql_close(mysql);
 		return;
 	}
 	std\io::print("MySQL-Connection created: handle="+mysql+"\n");
@@ -46,7 +46,7 @@ make_global_mysql(host, user, pass, db, port)
 
 delete_global_mysql()
 {
-	std\mysql::mysql_close(level.mysql);
+	mysql_close(level.mysql);
 	std\io::print("MySQL-Connection deleted: handle="+level.mysql+"\n");
 	//level.mysql = undefined;
 }
@@ -54,103 +54,6 @@ delete_global_mysql()
 /*
 	C INTERFACE
 */
-
-/*
-	100 == mysql_init()
-	101 == mysql_real_connect(mysql, host, user, pass, db, port)
-	102 == mysql_close(mysql)
-	103 == mysql_query(mysql, query)
-	104 == mysql_errno(mysql)
-	105 == mysql_error(mysql)
-	106 == mysql_affected_rows(mysql)
-	107 == mysql_store_result(mysql)
-	108 == mysql_num_rows(result)
-	109 == mysql_num_fields(result)
-	110 == mysql_field_seek(result, position)
-	111 == mysql_fetch_field()
-	112 == mysql_fetch_row(result)
-	113 == mysql_free_result(result)
-*/
-
-/* class */ mysql_init()
-{
-	mysql = closer(100);
-	return mysql;
-}
-
-/* class */ mysql_real_connect(mysql, host, user, pass, db, port)
-{
-	mysql = closer(101, mysql, host, user, pass, db, port);
-	return mysql;
-}
-
-mysql_close(mysql)
-{
-	return closer(102, mysql);
-}
-
-mysql_query(mysql, query)
-{
-	return closer(103, mysql, query);
-}
-
-mysql_errno(mysql)
-{
-	return closer(104, mysql);
-}
-
-mysql_error(mysql)
-{
-	return closer(105, mysql);
-}
-
-mysql_affected_rows(mysql)
-{
-	return closer(106, mysql);
-}
-
-/* class */ mysql_store_result(mysql)
-{
-	result = closer(107, mysql);
-	return result;
-}
-
-mysql_num_rows(result)
-{
-	return closer(108, result);
-}
-
-mysql_num_fields(result)
-{
-	return closer(109, result);
-}
-
-mysql_field_seek(result, position)
-{
-	return closer(110, result, position);
-}
-
-/* class */ mysql_fetch_field(result)
-{
-	field = closer(111, result);
-	return field; // name,table,db etc. of the column as array
-	// well, now its just the column-name as single string (faster and easier)
-}
-
-mysql_fetch_row(result)
-{
-	row = closer(112, result);
-	return row; // as array: [0]->first ROW [1]->second ROW...
-}
-
-mysql_free_result(result)
-{
-	return closer(113, result);
-}
-mysql_real_escape_string(mysql, str)
-{
-	return closer(114, mysql, str);
-}
 
 // LET THE PREPARED STATEMENTS COME TO LIVE! 13.05.2012
 

@@ -75,22 +75,22 @@ eventAddGetMoney(name,value)
 		return false;
 	
 	key = name;
-	ret = std\mysql::mysql_query(level.mysql, "SELECT statsDeltaMoney("+player.statsID+", "+value+") AS newMoney;");
+	ret = mysql_query(level.mysql, "SELECT statsDeltaMoney("+player.statsID+", "+value+") AS newMoney;");
 
-	if (!isDefined(ret) || std\mysql::mysql_errno(level.mysql))
+	if (!isDefined(ret) || mysql_errno(level.mysql))
 	{
-		std\io::print("ERROR: mod\\stats::add("+key+","+value+"): " + std\mysql::mysql_error(level.mysql));
+		printf("ERROR: mod\\stats::add("+key+","+value+"): " + mysql_error(level.mysql));
 		return;
 	}
-	result = std\mysql::mysql_store_result(level.mysql);
-	row = std\mysql::mysql_fetch_row(result);
+	result = mysql_store_result(level.mysql);
+	row = mysql_fetch_row(result);
 	if (!isDefined(row))
 	{
-		std\io::print("ROW NOT DEFINED\n");
+		printf("ROW NOT DEFINED\n");
 		return;
 	}
 	newvalue = int(row[0]);
-	std\mysql::mysql_free_result(result);
+	mysql_free_result(result);
 	
 	// default action
 	player.stats[name] /*+*/= newvalue; // statsDeltaMoney() is addget-like (before i added "value", but need it for money effect)
@@ -108,22 +108,22 @@ eventAddGetXP(name, value)
 		return false;
 		
 	key = name;
-	ret = std\mysql::mysql_query(level.mysql, "SELECT statsDeltaXP("+player.statsID+", "+value+") AS newXP;");
+	ret = mysql_query(level.mysql, "SELECT statsDeltaXP("+player.statsID+", "+value+") AS newXP;");
 
-	if (!isDefined(ret) || std\mysql::mysql_errno(level.mysql))
+	if (!isDefined(ret) || mysql_errno(level.mysql))
 	{
-		std\io::print("ERROR: mod\\stats::add("+key+","+value+"): " + std\mysql::mysql_error(level.mysql));
+		printf("ERROR: mod\\stats::add("+key+","+value+"): " + mysql_error(level.mysql));
 		return;
 	}
-	result = std\mysql::mysql_store_result(level.mysql);
-	row = std\mysql::mysql_fetch_row(result);
+	result = mysql_store_result(level.mysql);
+	row = mysql_fetch_row(result);
 	if (!isDefined(row))
 	{
-		std\io::print("ROW NOT DEFINED\n");
+		printf("ROW NOT DEFINED\n");
 		return;
 	}
 	newvalue = int(row[0]);
-	std\mysql::mysql_free_result(result);
+	mysql_free_result(result);
 
 	player.stats[name] /*+*/= newvalue;
 	
@@ -134,17 +134,17 @@ eventAddGetXP(name, value)
 loginUser(user, pass)
 {
 	player = self;
-	ret = std\mysql::mysql_query(level.mysql, "SELECT id FROM players WHERE user='" + player getGuid() + "'");
+	ret = mysql_query(level.mysql, "SELECT id FROM players WHERE user='" + player getGuid() + "'");
 	if (!isDefined(ret) || ret != 0)
 	{
 		// todo: write to log
-		iprintln("errno="+std\mysql::mysql_errno(level.mysql) + " error=''"+std\mysql::mysql_error(level.mysql) + "''");
+		printf("errno="+mysql_errno(level.mysql) + " error=''"+mysql_error(level.mysql) + "''");
 		return false;
 	}
 	
-	result = std\mysql::mysql_store_result(level.mysql);
-	row = std\mysql::mysql_fetch_row(result);
-	std\mysql::mysql_free_result(result);
+	result = mysql_store_result(level.mysql);
+	row = mysql_fetch_row(result);
+	mysql_free_result(result);
 	
 	if (!isDefined(row))
 		return false;
@@ -157,8 +157,8 @@ loginUser(user, pass)
 // doesnt do anything when user/pass-combination already exists
 createUser(user, pass)
 {
-	std\mysql::mysql_query(level.mysql, "INSERT INTO players (user, pass) VALUES ('" + user + "', '" + pass + "')");
-	//std\io::print("mysql_errno=" + std\mysql::mysql_errno(level.mysql) + "\n");
+	mysql_query(level.mysql, "INSERT INTO players (user, pass) VALUES ('" + user + "', '" + pass + "')");
+	//printf("mysql_errno=" + mysql_errno(level.mysql) + "\n");
 }
 
 isActive()
