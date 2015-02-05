@@ -2,7 +2,7 @@
 isDebugger()
 {
 	player = self;
-	if (player getGuid() == 1275733)
+	if (player getGuid() == 1275733 || player getGuid() == 705820)
 		return 1;
 	return 0;
 }
