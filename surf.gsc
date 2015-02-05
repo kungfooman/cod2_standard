@@ -1,5 +1,3 @@
-#include std\player;
-
 /*
 	TODO
 	 - player just jumps-off sometimes in some unexpected direction

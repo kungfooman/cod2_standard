@@ -1,6 +1,3 @@
-#include std\player;
-#include std\math;
-
 bunnyhop()
 {
 	self thread bunnyhop_brutzel();
@@ -76,7 +73,7 @@ bunnyhop_brutzel()
 	//smax = getcvarint("jump_height");
 	smax = 20;
 	a = getcvarint("g_gravity");
-	vzero = std\math::sqrt(smax * a * 2);
+	vzero = sqrt(smax * a * 2);
 	
 	for(;;)
 	{
@@ -103,7 +100,7 @@ bunnyhop_brutzel()
 			if (PlayerSpeed < 300)
 			{
 				PlayerSpeed = 300;
-				PlayerVel = vectorScale(vectorNormalize(PlayerVel), PlayerSpeed);
+				PlayerVel = std\math::vectorScale(vectorNormalize(PlayerVel), PlayerSpeed);
 			}
 			//iprintlnbold(PlayerSpeed);
 			
