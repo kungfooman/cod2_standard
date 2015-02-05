@@ -27,7 +27,7 @@ lookAt(toIgnore)
 	6 == moverightButtonPressed
 */
 
-setVelocity(velocity)
+setVelocityBase(velocity)
 {
 	player = self;
 	
@@ -40,25 +40,9 @@ setVelocity(velocity)
 		
 	velocity += player.baseVelocity;		
 	
-	functionid = 0;
-	playerid = player getEntityNumber();
-	x = velocity[0];
-	y = velocity[1];
-	z = velocity[2];
-	ret = closer(functionid, playerid, x, y, z);
+	player setVelocity(velocity);
 }
-addVelocity(velocity)
-{
-	player = self;
-	
-	functionid = 411;
-	playerid = player getEntityNumber();
-	x = velocity[0];
-	y = velocity[1];
-	z = velocity[2];
-	ret = closer(functionid, playerid, x, y, z);
-}
-getVelocity()
+getVelocityBase()
 {
 	player = self;
 	
@@ -69,52 +53,13 @@ getVelocity()
 	if (getTime() - player.baseVelocityLast > 100)
 		player.baseVelocity = (0,0,0);
 	
-	functionid = 1;
-	playerid = player getEntityNumber();
-	ret = closer(functionid, playerid);
+	ret = player getVelocity();
 	//iprintln("ret=", ret);
 	
 	ret -= player.baseVelocity;
 	
 	return ret;
 }
-
-aimButtonPressed()
-{
-	player = self;
-	
-	functionid = 2;
-	playerid = player getEntityNumber();
-
-	ret = closer(functionid, playerid);
-	return ret;
-}
-
-getStance()
-{
-	player = self;
-	
-	functionid = 400;
-	playerid = player getEntityNumber();
-
-	code = closer(functionid, playerid);
-	
-	// there is also another possible-to-use stance-value in gentities (values: 8c,48,f0, 27 von links, 5 von oben, todo: a-tag+onclick)
-	stance = "";
-	switch (code)
-	{
-		case  0: stance = "stand"; break; // also in spec
-		case  2: stance = "stand"; break;
-		case  4: stance = "duck"; break;
-		case  6: stance = "duck"; break;
-		case  8: stance = "lie"; break;
-		case 10: stance = "lie"; break;
-		default: iprintln("unknown stance for "+player.name+": " + code);
-	}
-	
-	return stance;
-}
-
 
 spawnIntermission()
 {
@@ -169,17 +114,3 @@ countActivePlayers(team)
 	}
 	return count;
 }
-
-leftButtonPressed() { return closer(421, self getEntityNumber()); }
-rightButtonPressed() { return closer(422, self getEntityNumber()); }
-forwardButtonPressed() { return closer(423, self getEntityNumber()); }
-backButtonPressed() { return closer(424, self getEntityNumber()); }
-leanleftButtonPressed() { return closer(425, self getEntityNumber()); }
-leanrightButtonPressed() { return closer(426, self getEntityNumber()); }
-jumpButtonPressed() { return closer(427, self getEntityNumber()); }
-
-getSpectatorClient() { return closer(450, self getEntityNumber()); }
-
-getIP() { return closer(430, self getEntityNumber()); }
-getPing() { return closer(431, self getEntityNumber()); }
-

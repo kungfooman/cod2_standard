@@ -58,9 +58,6 @@ vectorClamp(v, clampTo)
 	return (x,y,z);
 }
 
-sqrt(arg) { return closer(800, arg); }
-invSqrt(arg) { return closer(801, arg); } // check: http://www.beyond3d.com/content/articles/8/
-
 intsqrt(input)
 {
 	output = 0;

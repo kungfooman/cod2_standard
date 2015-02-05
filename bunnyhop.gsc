@@ -13,7 +13,7 @@ bunnyhop_iznogod()
 	self endon("killed_player");
 	smax = getcvarint("jump_height");
 	a = getcvarint("g_gravity");
-	vzero = std\math::sqrt(smax * a * 2);
+	vzero = sqrt(smax * a * 2);
 	maxh = 0;
 	startz = 0;
 	oldvelocity = (0, 0, 0);

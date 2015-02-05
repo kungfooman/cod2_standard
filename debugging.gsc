@@ -51,26 +51,26 @@ watchCloserCvar()
 			{
 				setcvar("tmp", args[i]);
 				args[i] = getcvarfloat("tmp");
-				//std\io::print("is a float! "+args[i]+"\n");
+				//printf("is a float! "+args[i]+"\n");
 				continue;
 			}
 		}
 		ret = closer(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]);
-		std\io::print("\n\tcloser("+cmd+"): ret=");
+		printf("\n\tcloser("+cmd+"): ret=");
 		
-		type = std\utils::getType(ret);
-		std\io::println("type=" + type);
-		std\io::println(" value=" + ret);
+		type = getType(ret);
+		printfLine("type=" + type);
+		printfLine(" value=" + ret);
 		continue;
 		
 		if ( ! isDefined(ret))
 		{
-			std\io::println("undefined!");
+			printfLine("undefined!");
 			continue;
 		}
 		if ( isPlayer(ret))
 		{
-			std\io::println("player name=" + ret.name);
+			printfLine("player name=" + ret.name);
 			continue;
 		}
 		
@@ -81,13 +81,13 @@ watchCloserCvar()
 		
 		a = ""; if (isString(ret)) a="is string"; else a="no string";
 		b = ""; if (!isString(ret) && isDefined(ret.size)) b="is array size:" + ret.size; else b="no array";
-		std\io::print(a + "\n" + b + "\n");*/
+		printf(a + "\n" + b + "\n");*/
 		
 		if (!isString(ret) && isDefined(ret.size)) // fake isArray(var)
 			for (i=0; i<ret.size; i++)
-				std\io::print(i + ": >>>"+ret[i]+"<<<\n");
+				printf(i + ": >>>"+ret[i]+"<<<\n");
 		else
-			std\io::print(">>>"+ret+"<<<\n");
+			printf(">>>"+ret+"<<<\n");
 	}
 }
 watchScriptCvar()
@@ -134,7 +134,7 @@ watchScriptCvar()
 			{
 				setcvar("tmp", args[i]);
 				args[i] = getcvarfloat("tmp");
-				//std\io::print("is a float! "+args[i]+"\n");
+				//printf("is a float! "+args[i]+"\n");
 				continue;
 			}
 		}
@@ -142,34 +142,34 @@ watchScriptCvar()
 		switch (args[0])
 		{
 			case "hello":
-				std\io::print("Hello World!");
+				printf("Hello World!");
 				break;
 			case "bye":
-				std\io::print("Bye World!");
+				printf("Bye World!");
 				break;
 			case "closer201":
 				arr = closer(201); // make array
 				arr["asd0"] = 0;
 				arr["asd1"] = 1;
 				arr["asd2"] = 2;
-				std\io::print("closer201 arr.size="+arr.size+"\n");
-				std\io::print("key1=" + arr["key1"] + " ");
-				std\io::print("key2=" + arr["key2"] + " ");
-				std\io::print("asd0=" + arr["asd0"] + " ");
-				std\io::print("asd1=" + arr["asd1"] + " ");
-				std\io::print("asd2=" + arr["asd2"] + " ");
+				printf("closer201 arr.size="+arr.size+"\n");
+				printf("key1=" + arr["key1"] + " ");
+				printf("key2=" + arr["key2"] + " ");
+				printf("asd0=" + arr["asd0"] + " ");
+				printf("asd1=" + arr["asd1"] + " ");
+				printf("asd2=" + arr["asd2"] + " ");
 				break;
 			case "closer204":
 				struct = closer(204); // make struct
 				struct.asd0 = 0;
 				struct.asd1 = 1;
 				struct.asd2 = 2;
-				std\io::print("closer204 struct.size="+struct.size+"\n");
-				std\io::print("key1=" + struct.key1 + " ");
-				std\io::print("key2=" + struct.key2 + " ");
-				std\io::print("asd0=" + struct.asd0 + " ");
-				std\io::print("asd1=" + struct.asd1 + " ");
-				std\io::print("asd2=" + struct.asd2 + " ");
+				printf("closer204 struct.size="+struct.size+"\n");
+				printf("key1=" + struct.key1 + " ");
+				printf("key2=" + struct.key2 + " ");
+				printf("asd0=" + struct.asd0 + " ");
+				printf("asd1=" + struct.asd1 + " ");
+				printf("asd2=" + struct.asd2 + " ");
 				break;
 			case "mysql":
 				std\mysql_debugging::mysql_test();
@@ -195,7 +195,7 @@ watchScriptCvar()
 				level.car setModel("xmodel/vehicle_german_kubel_nomandy");
 				level.car.angles = (0,0,0);
 				level.car.pointer = ret;
-				std\io::print("ret = " + ret + "\n");
+				printf("ret = " + ret + "\n");
 				break;
 			case "car_update":
 				
@@ -206,24 +206,24 @@ watchScriptCvar()
 				level.car.origin = origin;
 				level.car.angles = angles;
 				
-				std\io::print("(");
-				std\io::print(""+origin[0]);
-				std\io::print(",");
-				std\io::print(""+origin[1]);
-				std\io::print(",");
-				std\io::print(""+origin[2]);
-				std\io::print(")\n");
-				std\io::print("("+angles[0]+","+angles[1]+","+angles[2]+")\n");
+				printf("(");
+				printf(""+origin[0]);
+				printf(",");
+				printf(""+origin[1]);
+				printf(",");
+				printf(""+origin[2]);
+				printf(")\n");
+				printf("("+angles[0]+","+angles[1]+","+angles[2]+")\n");
 				
 				break;
 				
 			case "tcc":
 				//state = std\tcc::tcc_new();
-				//std\io::println(std\tcc::tcc_add_include_path(state, "/usr/include"));
-				//std\io::println(std\tcc::tcc_add_include_path(state, "include"));
-				//std\io::println(std\tcc::tcc_add_file(0, "first.c"));
-				//std\io::println(std\tcc::tcc_run(state));
-				//std\io::println(std\tcc::tcc_delete(state));
+				//printfLine(std\tcc::tcc_add_include_path(state, "/usr/include"));
+				//printfLine(std\tcc::tcc_add_include_path(state, "include"));
+				//printfLine(std\tcc::tcc_add_file(0, "first.c"));
+				//printfLine(std\tcc::tcc_run(state));
+				//printfLine(std\tcc::tcc_delete(state));
 				break;
 		}
 	}

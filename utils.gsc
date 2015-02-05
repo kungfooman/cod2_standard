@@ -185,7 +185,7 @@ getRealEye()
 {
 	player = self;
 
-	stance = player std\player::getStance();
+	stance = player getStance();
 	
 	offset = 0;
 	switch (stance)
@@ -314,8 +314,3 @@ orientToNormal( normal )
 
 	return plant_angle;
 }
-
-disableGlobalPlayerCollision() { return closer(900); }
-getType(arg) { return closer(205, arg); }
-ClientCommand(clientNum) { return closer(901, clientNum); }
-getAscii(str) { return closer(902, str); }
