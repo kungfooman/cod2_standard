@@ -7,6 +7,10 @@ isDebugger()
 	return 0;
 }
 
+printfLine(msg) {
+	printf("%\n", msg);
+}
+
 watchCloserCvar()
 {
 	setcvar("closer", "");
